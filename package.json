@@ -1,45 +1,129 @@
 {
-	"name": "hasura-cli",
-	"displayName": "hasura-cli",
-	"description": "",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.45.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-        "onCommand:hasura-cli.helloWorld"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "hasura-cli.helloWorld",
-                "title": "Hello World"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "yarn run compile",
-		"compile": "tsc -p ./",
-		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch -p ./",
-		"pretest": "yarn run compile && yarn run lint",
-		"test": "node ./out/test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/vscode": "^1.45.0",
-		"@types/glob": "^7.1.1",
-		"@types/mocha": "^7.0.2",
-		"@types/node": "^13.11.0",
-		"eslint": "^6.8.0",
-		"@typescript-eslint/parser": "^2.26.0",
-		"@typescript-eslint/eslint-plugin": "^2.26.0",
-		"glob": "^7.1.6",
-		"mocha": "^7.1.1",
-		"typescript": "^3.8.3",
-		"vscode-test": "^1.3.0"
-	}
+  "name": "hasura-cli",
+  "displayName": "Hasura CLI",
+  "description": "",
+  "version": "0.0.1",
+  "publisher": "aleksandra",
+  "enableProposedApi": true,
+  "engines": {
+    "vscode": "^1.42.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:hasura"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "package-explorer",
+          "title": "Package Explorer",
+          "icon": "media/hasura.svg"
+        }
+      ]
+    },
+    "views": {
+      "package-explorer": [
+        {
+          "id": "hasura",
+          "name": "Hasura"
+        },
+        {
+          "id": "actions",
+          "name": "Actions"
+        },
+        {
+          "id": "metadata",
+          "name": "Metadata"
+        },
+        {
+          "id": "migrate",
+          "name": "Migrate"
+        },
+        {
+          "id": "help",
+          "name": "Help"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "hasura",
+        "contents": "No Hasura project found [learn more](https://www.npmjs.com/).\n[Creat a directory for Hasura migrations](command:hasura.initProject)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "hasura.refreshEntry",
+        "title": "Refresh",
+        "icon": {
+          "light": "resources/light/refresh.svg",
+          "dark": "resources/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "hasura.addEntry",
+        "title": "Add"
+      },
+      {
+        "command": "hasura.editEntry",
+        "title": "Edit",
+        "icon": {
+          "light": "resources/light/edit.svg",
+          "dark": "resources/dark/edit.svg"
+        }
+      },
+      {
+        "command": "hasura.deleteEntry",
+        "title": "Delete"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "hasura.refreshEntry",
+          "when": "view == hasura",
+          "group": "navigation"
+        },
+        {
+          "command": "hasura.addEntry",
+          "when": "view == hasura"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "hasura.editEntry",
+          "when": "view == hasura && viewItem == dependency",
+          "group": "inline"
+        },
+        {
+          "command": "hasura.deleteEntry",
+          "when": "view == hasura && viewItem == dependency"
+        }
+      ]
+    },
+    "configuration": []
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/mkdirp": "^0.5.2",
+    "@types/node": "^12.12.0",
+    "@types/rimraf": "^2.0.2",
+    "@types/vscode": "^1.42.0",
+    "typescript": "^3.8.3",
+    "tslint": "^5.12.1"
+  },
+  "dependencies": {
+    "jsonc-parser": "^0.4.2",
+    "ftp": "^0.3.10",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.2"
+  }
 }
